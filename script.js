@@ -8,6 +8,8 @@ for(let i = 0; i < 16; i++){
         const list = gridElement.classList;
         list.add('gridElement');
 
+        gridElement.addEventListener('mouseover', () => gridElement.classList.add('hovered'));
+
         grid.appendChild(gridElement);
     }
 }
