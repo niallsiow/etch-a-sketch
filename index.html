@@ -12,7 +12,7 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
     }
 
@@ -24,12 +24,12 @@
     .grid{
       display: flex;
       flex-wrap: wrap;
-      width: 192px;
+      width: 592px;
     }
 
     .gridElement{
-      height: 10px;
-      width: 10px;
+      height: 35px;
+      width: 35px;
     }
 
     .hovered{
@@ -42,5 +42,9 @@
     <h1>Etch-A-Sketch</h1>
 
     <div class="grid"></div>
+
+    <!--empty div used for flexbox spacing-->
+    <div></div>
+
   </body>
 </html>
