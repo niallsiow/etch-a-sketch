@@ -21,13 +21,18 @@ function makeNewGrid(gridWidth){
     }
 }
 
-makeNewGrid(64);
+makeNewGrid(16);
 
 const btn = document.querySelector('.btn');
 btn.addEventListener('click', () => {
     let gridWidth = prompt('Enter Grid Width:', 16);
 
-    // need to delete old grid first
+    if(gridWidth > 100){
+        gridWidth = prompt('Grid Width entered is too big, please enter a grid width less than 100:', 16);
+    }
+
+
+    grid.replaceChildren();
 
     makeNewGrid(gridWidth);
 });
