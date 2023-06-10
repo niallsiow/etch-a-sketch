@@ -5,7 +5,8 @@ function getRandomColor(){
 
 const DrawingMode = {
     Standard: 'standard',
-    Rainbow: 'rainbow'
+    Rainbow: 'rainbow',
+    Gradual: 'gradual'
 }
 
 let currentDrawingMode = DrawingMode.Standard;
@@ -13,7 +14,6 @@ let currentDrawingMode = DrawingMode.Standard;
 function setDrawingMode(mode){
     currentDrawingMode = mode;
     makeNewGrid(gridWidth);
-    console.log(currentDrawingMode);
 }
 
 
@@ -36,15 +36,27 @@ function makeNewGrid(gridWidth){
             gridElement.style.height = gridElementPixelWidth + 'px';
 
             
-            // change this to a switch statement
-            if(currentDrawingMode === DrawingMode.Standard){
-                gridElement.addEventListener('mouseover', () => gridElement.classList.add('hovered'));
-            }
-            else if(currentDrawingMode === DrawingMode.Rainbow){
-                gridElement.addEventListener('mouseover', () => {
-                    console.log('#' + getRandomColor().toUpperCase());
-                    gridElement.style.backgroundColor = '#' + getRandomColor().toUpperCase();
-                });
+            switch(currentDrawingMode){
+                case DrawingMode.Standard:
+                    gridElement.addEventListener('mouseover', () => gridElement.classList.add('hovered'));
+                    break;
+                case DrawingMode.Rainbow:
+                    gridElement.addEventListener('mouseover', () => gridElement.style.backgroundColor = '#' + getRandomColor().toUpperCase());
+                    break;
+                case DrawingMode.Gradual:
+                    gridElement.addEventListener('mouseover', () => {
+                        if(gridElement.style.backgroundColor == ""){
+                            gridElement.style.backgroundColor = 'rgb(230, 230, 230)';
+                        }
+                        else{
+                            let rgb = gridElement.style.backgroundColor.replace('rgb', '').replace('(', '').replace(')', '').split(', ');
+                            gridElement.style.backgroundColor = `rgb(${parseInt(rgb[0]) - 25}, ${parseInt(rgb[1]) - 25}, ${parseInt(rgb[2]) - 25})`;
+                        }
+                        
+                    });
+                    break;
+                default:
+                    gridElement.addEventListener('mouseover', () => gridElement.classList.add('hovered'));
             }
     
             grid.appendChild(gridElement);
@@ -57,7 +69,7 @@ makeNewGrid(gridWidth);
 
 const btn = document.querySelector('.btn');
 btn.addEventListener('click', () => {
-    let gridWidth = prompt('Enter Grid Width:', 16);
+    gridWidth = prompt('Enter Grid Width:', 16);
 
     if(gridWidth > 100){
         gridWidth = prompt('Grid Width entered is too big, please enter a grid width less than 100:', 16);
@@ -71,3 +83,6 @@ standardButton.addEventListener('click', () => setDrawingMode(DrawingMode.Standa
 
 const rainbowButton = document.querySelector('.rainbow');
 rainbowButton.addEventListener('click', () => setDrawingMode(DrawingMode.Rainbow));
+
+const gradualButton = document.querySelector('.gradual');
+gradualButton.addEventListener('click', () => setDrawingMode(DrawingMode.Gradual));
